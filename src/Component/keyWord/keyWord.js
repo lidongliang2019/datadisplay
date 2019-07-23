@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Button,Menu, Icon,PageHeader, List, Typography,Pagination } from 'antd/lib/index';
+import {Button,Menu, Icon,PageHeader, List, Typography,Pagination,Breadcrumb } from 'antd/lib/index';
 import 'antd/dist/antd.css';
 import {Link} from "react-router-dom";
 const { SubMenu } = Menu;
@@ -36,6 +36,15 @@ class Home extends  Component{
         <div style={{position:"fixed", top: 0, left: 0, width: '100%',zIndex:'1000',}}>
           <Link to="/"><PageHeader style={{backgroundColor:"#FF8C00",}} onBack={() => null} title="返回" subTitle="Home" />,</Link>
           <img style={{width:'170px',height:'60px',position:'absolute',top:'0px',right:'0px',}} src={require('../../../src/Image/源浩网.png')}/>
+          <Breadcrumb style={{position:'fixed',top:'19px',left:'200px',width:'100%'}}>
+            <Breadcrumb.Item href="http://localhost:3000/#/">
+              <Icon type="home" />
+            </Breadcrumb.Item>
+            <Breadcrumb.Item href="">
+              <Icon type="uesr" />
+              <span>关键字搜索</span>
+            </Breadcrumb.Item>
+          </Breadcrumb>
         </div>
         <div style={{ display:"flex"}}>
 
@@ -77,7 +86,7 @@ class Home extends  Component{
             </Menu>
           </div>
           <div style={{
-            flex:2,
+            flex:2.2,
           }}>
             <h3 style={{ }}>Default Size</h3>
             <List style={{marginTop:'34px',zIndex:'99'}}

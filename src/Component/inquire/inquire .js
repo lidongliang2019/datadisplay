@@ -147,7 +147,7 @@ class inquire  extends  Component{
                 }
               >
                 <Menu.Item key="5"><Link to="/addData">增加数据</Link></Menu.Item>
-                <Menu.Item key="6">修改数据11</Menu.Item>
+                <Menu.Item key="6">修改数据</Menu.Item>
                 <Menu.Item key="7">删除数据</Menu.Item>
               </SubMenu>
             </Menu>

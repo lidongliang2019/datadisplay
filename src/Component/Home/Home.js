@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Button,Menu, Icon,PageHeader, List, Typography,Pagination } from 'antd';
+import {Button,Menu, Icon,PageHeader, List, Typography,Pagination,Breadcrumb } from 'antd';
 import 'antd/dist/antd.css';
 import { Link } from "react-router-dom";
 const { SubMenu } = Menu;
@@ -18,7 +18,7 @@ class Home extends  Component{
   rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
 
   state = {
-    openKeys: ['sub1'],
+    openKeys: [''],
   };
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
@@ -30,29 +30,35 @@ class Home extends  Component{
       });
     }
   };
-  function(){
-    //电话
-    var inputphone=document.getElementById("Phone");
-    var spanphone=document.getElementById("phoneId");
-    var phonecontent=inputphone.value;
-    var regphone=/^(0?[1-9]{2,3}-?)?[1-9]\d{6,7}(-\d{1,4})?$/;
-    if(regphone.test(phonecontent)){
-      spanphone.innerHTML = "正确".fontcolor("green");
-      return true;
-    }else{
-      spanphone.innerHTML = "格式不对".fontcolor("red");
-      return false;
-    }
-  }
+  // function(){
+  //   //电话
+  //   var inputphone=document.getElementById("Phone");
+  //   var spanphone=document.getElementById("phoneId");
+  //   var phonecontent=inputphone.value;
+  //   var regphone=/^(0?[1-9]{2,3}-?)?[1-9]\d{6,7}(-\d{1,4})?$/;
+  //   if(regphone.test(phonecontent)){
+  //     spanphone.innerHTML = "正确".fontcolor("green");
+  //     return true;
+  //   }else{
+  //     spanphone.innerHTML = "格式不对".fontcolor("red");
+  //     return false;
+  //   }
+  // }
   render() {
     return(
       <div>
         <div style={{position:"fixed", top: 0, left: 0, width: '100%',zIndex:'1000',}}>
-        <Link to="/Login"><PageHeader style={{backgroundColor:"#FF8C00",}} onBack={() => null} title="返回" subTitle="登录界面" />,</Link>
+        <Link to="/"><PageHeader style={{backgroundColor:"#FF8C00",}} onBack={() => null} title="返回" subTitle="登录界面" />,</Link>
           <img style={{width:'170px',height:'60px',position:'absolute',top:'0px',right:'0px',}} src={require('../../../src/Image/源浩网.png')}/>
+          <Breadcrumb style={{position:'fixed',top:'19px',left:'200px',width:'100%'}}>
+            <Breadcrumb.Item href="http://localhost:3000/#/">
+              <Icon type="home" />
+              <span>Home</span>
+            </Breadcrumb.Item>
+
+          </Breadcrumb>
         </div>
         <div style={{ display:"flex"}}>
-
           <div style={{
            height:'100vh',
             flex:'0.5',
@@ -67,7 +73,7 @@ class Home extends  Component{
               key="sub1"
               title={
                 <span>
-              <Icon type="appstore" />
+              <Icon type="appstore"/>
               <span>数据查询</span>
             </span>
               }
@@ -91,7 +97,7 @@ class Home extends  Component{
           </Menu>
           </div>
           <div style={{
-            flex:2,
+            flex:2.2,
           }}>
             <h3 style={{ }}>Default Size</h3>
             <List style={{marginTop:'34px',zIndex:'99'}}
