@@ -90,7 +90,7 @@ class Home extends  Component{
           }}>
             <h3 style={{ }}>Default Size</h3>
             <List style={{marginTop:'34px',zIndex:'99'}}
-                  header={<div><button>添加222</button></div>}
+                  header={<div><button>添加</button></div>}
                   footer={<div>Footer</div>}
                   bordered
                   dataSource={data}
