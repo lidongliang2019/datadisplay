@@ -1,53 +1,117 @@
 import React,{Component} from 'react';
-import {Button,Menu, Icon,PageHeader, List, Typography,Pagination,Input } from 'antd';
+import {Button,Menu, Icon,PageHeader, List, Typography,Pagination,Input,Breadcrumb } from 'antd';
 import 'antd/dist/antd.css';
+import {render} from "react-dom";
 import {Link} from "react-router-dom";
 const { SubMenu } = Menu;
 const { Search } = Input;
-const data = [
-  '德里克.罗斯',
-  '勒布朗.詹姆斯',
-  '克里斯.保罗',
-];
-var bbtn=document.getElementById('bbtn');
-var search2=document.getElementById('search');
-var text=document.getElementsByTagName('p')[0];
-var text1=text.innerHTML;
-var arr=[];
-var str=text1;
-bbtn.onclick=function(){
-  str=text1
-  arr=search2.value;
-  str=str.split(arr).join('<span>'+arr+'</span>');
-  text.innerHTML=str;
-}
+// const data = [
+//   '德里克.罗斯',
+//   '勒布朗.詹姆斯',
+//   '克里斯.保罗',
+// ];
 function onChange(pageNumber) {
   console.log('Page: ', pageNumber);
 }
 
-class Home extends  Component{
-  rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
+class inquire  extends  Component{
+  rootSubmenuKeys = ['sub1', 'sub2', ];
 
   state = {
     openKeys: ['sub1'],
+    dataAll: [
+      '德里克.罗斯',
+      '勒布朗.詹姆斯',
+      '克里斯.保罗',
+    ],
+    data: [],
+    searchText: '',
   };
 
+  // onOpenChange = openKeys => {
+  //   const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
+  //   if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+  //     this.setState({ openKeys });
+  //   } else {
+  //     this.setState({
+  //       openKeys: latestOpenKey ? [latestOpenKey] : [],
+  //     });
+  //   }
+  // };
   onOpenChange = openKeys => {
     const latestOpenKey = openKeys.find(key => this.state.openKeys.indexOf(key) === -1);
-    if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      this.setState({ openKeys });
+    if (this.rootSubmenuKeys.indexOf(latestOpenKey) ===-1){
+      this.setState({openKeys});
     } else {
-      this.setState({
-        openKeys: latestOpenKey ? [latestOpenKey] : [],
+      this.setState({openKeys:latestOpenKey ? {latestOpenKey} :{},
       });
     }
   };
+
+  // changeEvent = (e) => {
+  //     const { dataAll } = this.state;
+  //     this.setState({
+  //       searchText: e.target.value,
+  //       data: dataAll.filter((item) => {
+  //         if(e.target.value === '') {
+  //           return false
+  //         } else {
+  //           return item.includes(e.target.value)
+  //         }
+  //       }),
+  //     });
+  //   };
+
+  changeEvent = (e) => {
+    const{dataAll} = this.state;
+    this.setState({
+    searchText: e.target.value,
+      data:dataAll.filter((item) => {
+      if (e.target.value ===''){
+        return false
+      } else {
+        return item.includes(e.target.value)
+      }
+    }),
+    });
+  };
+
   render() {
+    const { searchText, data } = this.state;
+
     return(
       <div>
         <div style={{position:"fixed", top: 0, left: 0, width: '100%',zIndex:'1000',}}>
           <Link to="/"><PageHeader style={{backgroundColor:"#FF8C00",}} onBack={() => null} title="返回" subTitle="Home" />,</Link>
           <img style={{width:'170px',height:'60px',position:'absolute',top:'0px',right:'0px',}} src={require('../../../src/Image/源浩网.png')}/>
+          <div style={{position:"absolute",top:"12px",left:"500px" ,zIndex:"1002"}}>
+            <Search
+              value={searchText}
+              style={{width:"300px",}}
+              onChange={(e)=> this.changeEvent(e)}
+              placeholder="请输入关键字"
+              className="selects"
+            />
+          </div>
+
+          {/*<div className="">*/}
+          {/*  {*/}
+          {/*    data.map((item) => (*/}
+          {/*      <div className="" key={item}>{ item }</div>*/}
+          {/*    ))*/}
+          {/*  }*/}
+          {/*</div>*/}
+
+          <Breadcrumb style={{position:'fixed',top:'19px',left:'200px',width:'100%',}}>
+            <Breadcrumb.Item href="http://localhost:3000/#/">
+              <Icon type="home" />
+              <span>Home</span>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item href="">
+              <Icon type="user" />
+              <span>inquire</span>
+            </Breadcrumb.Item>
+          </Breadcrumb>
         </div>
         <div style={{ display:"flex"}}>
 
@@ -83,42 +147,39 @@ class Home extends  Component{
                 }
               >
                 <Menu.Item key="5"><Link to="/addData">增加数据</Link></Menu.Item>
-                <Menu.Item key="6">修改数据</Menu.Item>
+                <Menu.Item key="6">修改数据11</Menu.Item>
                 <Menu.Item key="7">删除数据</Menu.Item>
               </SubMenu>
             </Menu>
           </div>
-          {/*<div style={{position:"absolute",top:"80px",left:"500px  "}}>*/}
-          {/*  <Search type={text} name={"searchs"} placeholder="请输入关键字" onSearch={value => console.log(value)} enterButton />*/}
-          {/*</div>*/}
+
+          <div style={{
+            flex:2.2,
+            position:"relative",
+            marginTop:"50px",
+            left:"0px"
+          }}>
+            {/*<h3 style={{ }}>Default Size</h3>*/}
+            <List style={{zIndex:'99'}}
+                  header={<div>数据信息</div>}
+                  footer={<div>表尾</div>}
+                  bordered
+                  dataSource={data}
+                  renderItem={item => (
+                    <List.Item>
+                      <Typography.Text mark></Typography.Text> {item}
+                    </List.Item>
+                  )}
+            />
+          </div>
         </div>
-        <div style={{
-          flex:2,
-        }}>
-          <h3 style={{ }}>Default Size</h3>
-          <List style={{marginTop:'34px',zIndex:'99'}}
-                header={<div>表头</div>}
-                footer={<div>表尾</div>}
-                bordered
-                dataSource={data}
-                renderItem={item => (
-                  <List.Item>
-                    <Typography.Text mark></Typography.Text> {item}
-                  </List.Item>
-                )}
-          />
-          <input type="text" name="search" id="search" value="馋" onClick="this.value='' "/>
-          <input type="button" name="" id="bbtn" value="搜索"/>
-          <div id="div">
-            <p>馋，在英文里找不到一个十分适当的字。罗马暴君尼禄，以至于英国的亨利八世，在大宴群臣的时候，常见其撕下一根根又粗又壮的鸡腿，举起来大嚼，旁若无人，好一副饕餮相！但那不是馋。埃及废王法鲁克，据说每天早餐一口气吃二十个荷包蛋，也不是馋，只是放肆，只是没有吃相。对有某一种食物有所偏好，于是大量的吃，这是贪多无厌。馋，则着重在食物的质，最需要满足的是品味。上天生人，在他嘴里安放一条舌，舌上还有无数的味蕾，教人焉得不馋？馋，基于生理的要求；也可以发展成为近于艺术的趣味。
-              也许我们中国人特别馋一些。馋字从食，有声。毚音谗，本义是狡兔，善于奔走，人为了口腹之欲，不惜多方奔走以膏馋吻，所谓“为了一张嘴，跑断两条腿”。</p>
-        </div>
+
+       <div style={{textAlign:'center'}}>
+      <Pagination showQuickJumper defaultCurrent={2} total={500} onChange={onChange} />
+       </div>
+
       </div>
-      // <div style={{textAlign:'center'}}>
-      //   <Pagination showQuickJumper defaultCurrent={2} total={500} onChange={onChange} />
-      // </div>
-      // </div>
     )
   }
 }
-export default Home;
+export default inquire;
